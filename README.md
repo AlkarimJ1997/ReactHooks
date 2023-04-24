@@ -322,7 +322,7 @@ useLayoutEffect(() => {
 }, [inputRef]);
 ```
 
-## useImpreativeHandle
+## useImperativeHandle
 
 useImperativeHandle is a hook that is useful for referencing multiple child elements of a child component inside a parent component.
 
