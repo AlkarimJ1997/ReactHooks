@@ -418,3 +418,131 @@ const useCustomHook = () => {
 Custom hooks are a way to share logic between components. They are just functions that use other hooks but are useful to increase reusability in React components.
 
 The following custom hooks are all useful hooks that I've created from following tutorials and building projects.
+
+## useToggle
+
+useToggle is a custom hook that acts like useState but can toggle a boolean value between true and false. It can also be passed a boolean value to set it to that value explicitly.
+
+```javascript
+const [value, toggleValue] = useToggle(false);
+
+<button onClick={toggleValue}>Toggle</button>
+<button onClick={() => toggleValue(true)}>Set to true</button>
+<button onClick={() => toggleValue(false)}>Set to false</button>
+```
+
+## useTimeout
+
+useTimeout is a custom hook that sets a timeout on an action and executes it after the timeout has passed. It also includes a clear function to clear the timeout, and a reset function to reset the timeout.
+
+```javascript
+const { clear, reset } = useTimeout(() => {
+	console.log('Hello, world!');
+}, 1000);
+```
+
+## useDebounce
+
+useDebounce is a custom hook that debounces a value. It is useful for inputs that you don't want to fire on every keystroke or a value that rapidly changes.
+
+In this example, the alert will fire after 1 second of the count not changing.
+
+```javascript
+useDebounce(() => alert(count), 1000, [count]);
+```
+
+## useUpdateEffect
+
+useUpdateEffect is a custom hook that is similar to useEffect, but it doesn't run on the first render. It is useful for when you want to run an effect only after the first render.
+
+Notice that its syntax and usage is identical to useEffect.
+
+```javascript
+useUpdateEffect(() => {
+	console.log('Hello, world!');
+}, [count]);
+```
+
+## useArray
+
+useArray is a custom hook that is useful for manipulating arrays. It includes the ability to set the array to an entirely new array, and functions for adding, removing, updating, and clearing, without the peskiness of React's immutability of state.
+
+It stores the array using useState, so it can be used in the same way as useState.
+
+```javascript
+const { array, set, push, remove, filter, update, clear } = useArray([1, 2, 3, 4, 5]);
+
+<button onClick={() => set([1, 2, 3])}>Set to [1, 2, 3]</button>
+<button onClick={() => push(6)}>Push 6</button>
+<button onClick={() => remove(0)}>Remove first element</button>
+<button onClick={() => filter((n) => n < 3)}>Filter out all numbers less than 3</button>
+<button onClick={() => update(0, 10)}>Update first element to 10</button>
+<button onClick={clear}>Clear</button>
+```
+
+## usePrevious
+
+usePrevious is a custom hook that is useful for storing the previous value of a state. It is useful for comparing the previous value to the current value.
+
+It acts as a reference to the previous value, so it will automatically update when the value changes.
+
+```javascript
+const [count, setCount] = useState(0);
+const previousCount = usePrevious(count);
+```
+
+## useStateWithHistory
+
+useStateWithHistory is a custom hook that is useful for storing the previous values of a state. It is useful for comparing and reading the entire history of a value.
+
+It acts like useState with the first two return values, then includes an array of the history, a pointer to the current value (index) and functions to go back, go forward, and go to a specific point in the history.
+
+```javascript
+const [count, setCount, { history, pointer, back, forward, go }] = useStateWithHistory(1);
+
+<button onClick={back}>Back</button>
+<button onClick={forward}>Forward</button>
+<button onClick={() => go(2)}>Go to index 2</button>
+```
+
+## useStorage
+
+useStorage is a custom hook that is useful for storing values in localStorage or sessionStorage. It is useful for storing values that you want to persist between sessions. It requires a key and a default value.
+
+It acts like useState with the first two return values, then includes a function to clear the storage.
+
+```javascript
+const [name, setName, removeName] = useSessionStorage('name', 'Kyle');
+const [age, setAge, removeAge] = useLocalStorage('age', 26);
+```
+
+## useAsync
+
+useAsync is a custom hook that is useful for handling asynchronous functions. It takes a callback function that returns a promise, and an optional array of dependencies.
+
+It returns loading, error, and value states.
+
+```javascript
+const { loading, error, value } = useAsync(() => {
+	return new Promise((resolve, reject) => {
+		const success = true;
+
+		setTimeout(() => {
+			success ? resolve('Hi') : reject('Error');
+		}, 1000);
+	});
+});
+```
+
+## useFetch
+
+useFetch is a custom hook that is an extension of useAsync. It is useful for fetching data from an API. It takes a URL, an optional object for API options and headers, and an optional array of dependencies.
+
+It returns loading, error, and value states. In this case, the value will update with the data from the API every time the ID changes since it is a dependency.
+
+```javascript
+const API_URL = 'https://jsonplaceholder.typicode.com/todos/';
+
+const [id, setId] = useState(1);
+const { loading, error, value } = useFetch(`${API_URL}${id}`, {}, [id]);
+```
