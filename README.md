@@ -642,6 +642,75 @@ useCopyToClipboard is a custom hook that is useful for copying text to the clipb
 ```javascript
 const [hasCopied, copyToClipboard] = useCopyToClipboard();
 
-<button onClick={() => copyToClipboard('Text to copy')}>Copy</button>
+<button onClick={() => copyToClipboard('Text to copy')}>Copy</button>;
 ```
 
+## useCookie
+
+useCookie is a custom hook that is useful for storing values in cookies. It is useful for storing values that you want to persist between sessions. It requires a key and a default value.
+
+It returns a value, a function to update the cookie, and a function to remove the cookie.
+
+```javascript
+const [value, update, remove] = useCookie('name', 'Kyle');
+
+<button onClick={() => update('John')}>Update</button>
+<button onClick={remove}>Remove</button>
+```
+
+## useTranslation
+
+useTranslation is a custom hook that is useful for translating text. It utilizes an assets folder in your project with JSON files for each language.
+
+```javascript
+const { language, setLanguage, t } = useTranslation();
+
+<div>{t('hello')}</div>
+<button onClick={() => setLanguage('en')}>English</button>
+<button onClick={() => setLanguage('es')}>Spanish</button>
+```
+
+## useOnlineStatus
+
+useOnlineStatus is a custom hook that is useful for detecting if the user is online or offline. It returns a boolean for whether the user is online.
+
+```javascript
+const isOnline = useOnlineStatus();
+```
+
+## useRenderCount
+
+useRenderCount is a custom hook that is useful for detecting how many times a component has rendered. It returns a number for the number of renders.
+
+```javascript
+const renderCount = useRenderCount();
+```
+
+## useHover
+
+useHover is a custom hook that is useful for detecting if the user is hovering over a specific element. It takes a reference to the element as an argument.
+
+```javascript
+const elementRef = useRef();
+const isHovered = useHover(elementRef);
+
+return <div ref={elementRef}>{isHovered ? 'Hovering' : 'Not hovering'}</div>;
+```
+
+## useLongPress
+
+useLongPress is a custom hook that is very similar to useHover. It is useful for running code if the user is long pressing on a specific element. It takes a reference to the specific element, a callback function to run, and an optional delay as arguments.
+
+```javascript
+const elementRef = useRef();
+
+useLongPress(elementRef, () => alert('Long press'));
+```
+
+It can also take a delay as an argument.
+
+```javascript
+const elementRef = useRef();
+
+useLongPress(elementRef, () => alert('Long press'), { delay: 1000 });
+```

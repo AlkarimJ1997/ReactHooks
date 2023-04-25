@@ -1,0 +1,7 @@
+{
+	"Hi": "Hello",
+	"Bye": "Goodbye",
+	"nested": {
+		"value": "Test"
+	}
+}

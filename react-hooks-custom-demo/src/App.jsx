@@ -19,9 +19,16 @@ import Size from './components/Size';
 import ClickOutside from './components/ClickOutside';
 import DarkMode from './components/DarkMode';
 import CopyToClipboard from './components/CopyToClipboard';
+import Cookie from './components/Cookie';
+import Translation from './components/Translation';
+import OnlineStatus from './components/OnlineStatus';
+import RenderCount from './components/RenderCount';
+import DebugInformation from './components/DebugInformation';
+import Hover from './components/Hover';
+import LongPress from './components/LongPress';
 
 function App() {
-	const renderSet = 4;
+	const renderSet = 5;
 
 	if (renderSet === 1) {
 		return (
@@ -62,16 +69,32 @@ function App() {
 		);
 	}
 
+	if (renderSet === 4) {
+		return (
+			<>
+				{/* More Custom Hooks */}
+				<Geolocation />
+				<StateWithValidation />
+				<Size />
+				<ClickOutside />
+				<DarkMode />
+				<CopyToClipboard />
+				<Cookie />
+				<Translation />
+			</>
+		);
+	}
+
 	return (
 		<>
-			<Geolocation />
-			<StateWithValidation />
-			<Size />
-			<ClickOutside />
-			<DarkMode />
-			<CopyToClipboard />
+			{/* More Custom Hooks */}
+			<OnlineStatus />
+			<RenderCount />
+			<DebugInformation />
+			<Hover />
+			<LongPress />
 		</>
-	);
+	)
 }
 
 export default App;
