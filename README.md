@@ -546,3 +546,102 @@ const API_URL = 'https://jsonplaceholder.typicode.com/todos/';
 const [id, setId] = useState(1);
 const { loading, error, value } = useFetch(`${API_URL}${id}`, {}, [id]);
 ```
+
+## useScript
+
+useScript is a custom hook that is an extension of useAsync. It is useful for loading scripts from a URL, such as jQuery, Stripe, or Google Analytics.
+
+We don't need a value in this case, because if there is no error, we can begin using the script.
+
+```javascript
+const { loading, error } = useScript('https://code.jquery.com/jquery-3.6.0.min.js');
+```
+
+## useEventListener
+
+useEventListener is a custom hook that is useful for adding event listeners to the window or a specific element. It takes an event name, a callback function, and an optional element. If the element is not provided, it will default to the window.
+
+```javascript
+useEventListener('click', () => console.log('Clicked!'));
+useEventListener('click', () => console.log('Clicked!'), elementRef.current);
+```
+
+## useOnScreen
+
+useOnScreen is a custom hook that is useful for detecting if an element is in the viewport. It takes an element ref and an optional root margin for how much of the element should be in the viewport.
+
+In this example, the element will be visible when it is 100px above the bottom of the viewport.
+
+```javascript
+const elementRef = useRef();
+const isVisible = useOnScreen(elementRef, '-100px');
+
+return (
+	<div>
+		<div style={{ height: '100vh' }}>Scroll down</div>
+		<div ref={elementRef}>{isVisible ? 'Visible' : 'Not visible'}</div>
+	</div>
+);
+```
+
+## useGeolocation
+
+useGeolocation is a custom hook that is useful for getting the user's geolocation. It returns loading, error, and value states. In this case, the value will be an object with the latitude and longitude.
+
+```javascript
+const {
+	loading,
+	error,
+	data: { latitude, longitude },
+} = useGeolocation();
+```
+
+## useStateWithValidation
+
+useStateWithValidation is a custom hook that is useful for validating a value, especially for form inputs. It takes a value, and a validation function.
+
+It acts like useState with the first two return values, then includes a validation boolean.
+
+```javascript
+const [name, setName, isValid] = useStateWithValidation('', n => n.length > 5);
+```
+
+## useSize
+
+useSize is a custom hook that is useful for getting the size of an element. It takes an element ref and dynamically updates the size of the element.
+
+```javascript
+const elementRef = useRef();
+const size = useSize(elementRef);
+
+return (
+	<>
+		<div>{JSON.stringify(size)}</div>
+		<textarea ref={elementRef}></textarea>
+	</>
+);
+```
+
+## useClickOutside
+
+useClickOutside is a custom hook that is useful for detecting when a user clicks outside of an element, typically for Modals. It takes an element ref and a callback function.
+
+```javascript
+const [open, setOpen] = useState(false);
+const modalRef = useRef();
+
+useClickOutside(modalRef, () => {
+	if (open) setOpen(false);
+});
+```
+
+## useCopyToClipboard
+
+useCopyToClipboard is a custom hook that is useful for copying text to the clipboard. It returns a boolean for whether the copy was successful, and a function to copy the text.
+
+```javascript
+const [hasCopied, copyToClipboard] = useCopyToClipboard();
+
+<button onClick={() => copyToClipboard('Text to copy')}>Copy</button>
+```
+

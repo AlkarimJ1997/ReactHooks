@@ -9,12 +9,13 @@
 }
 
 body {
+    min-height: 100vh;
     width: min(1200px, 100% - 2rem);
-    margin-inline: auto;
+    margin: 1rem auto;
 }
 
-div {
-    margin-top: 1rem;
+body.dark-mode {
+    background-color: #333;
 }
 
 input {
